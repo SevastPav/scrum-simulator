@@ -39,20 +39,19 @@
         android:id="@+id/button_exit"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginTop="8dp"
         android:text="@string/button_exit"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="210dp"
+        android:id="@+id/button_to_register"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="48dp"
-        android:text="@string/button_register"
+        android:text="@string/button_to_register"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
