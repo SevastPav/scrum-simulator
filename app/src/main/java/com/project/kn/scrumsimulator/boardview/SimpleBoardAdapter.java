@@ -38,7 +38,8 @@ public class SimpleBoardAdapter extends BoardAdapter{
 
     @Override
     public Object createFooterObject(int column_position) {
-        return "Footer "+ String.valueOf(column_position);
+        //return "Footer "+ String.valueOf(column_position);
+        return "";
     }
 
     @Override
@@ -48,7 +49,7 @@ public class SimpleBoardAdapter extends BoardAdapter{
 
     @Override
     public boolean isColumnLocked(int column_position) {
-        return false;
+        return true;
     }
 
     @Override
