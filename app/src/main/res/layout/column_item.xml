@@ -43,7 +43,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/story_content"
+            android:id="@+id/card_content"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="TextView"
@@ -64,19 +64,5 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="left"
-            app:constraint_referenced_ids="linearLayout" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="35dp"
-            tools:layout_editor_absoluteY="221dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
