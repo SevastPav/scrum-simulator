@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
         boardView.SetColumnSnap(false);
         boardView.SetColumnSnap(true);
         final ArrayList<SimpleBoardAdapter.SimpleColumn> data = new ArrayList<>();
-        list.add(new Item("Task 1"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
+        list.add(new Item("Task 1", "Description 1"));
+        list.add(new Item("Task 2", "Description 2"));
+        list.add(new Item("Task 3", "Description 3"));
         list.add(new Item("Task 2"));
         list.add(new Item("Task 2"));
         list.add(new Item("Task 2"));
