@@ -1,0 +1,44 @@
+package com.project.kn.scrumsimulator;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.project.kn.scrumsimulator.boardview.BoardView;
+import com.project.kn.scrumsimulator.boardview.Item;
+import com.project.kn.scrumsimulator.boardview.SimpleBoardAdapter;
+import com.project.kn.scrumsimulator.config.DatabaseConfig;
+
+import java.util.ArrayList;
+
+public class MainActivityOld extends AppCompatActivity {
+
+    public static EditText emailField, passwordField;
+    public static Button loginButton, registerButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_old);
+
+        emailField = findViewById(R.id.login_email);
+        passwordField = findViewById(R.id.login_password);
+        loginButton = findViewById(R.id.button_login);
+        registerButton = findViewById(R.id.button_to_register);
+
+        DatabaseConfig db = new DatabaseConfig();
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+}

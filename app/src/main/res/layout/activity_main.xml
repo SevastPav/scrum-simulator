@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.project.kn.scrumsimulator.boardview.BoardView
-        xmlns:boardview="http://schemas.android.com/apk/res-auto"
-        boardview:boardItemBackground="@color/colorPrimary"
+    <com.project.kn.scrumsimulator.boardview.BoardView xmlns:boardview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/boardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="256dp"
         android:layout_marginBottom="256dp"
-        android:id="@+id/boardView" />
+        boardview:boardItemBackground="@color/colorPrimary" />
 </RelativeLayout>
