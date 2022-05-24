@@ -60,7 +60,7 @@ public class SimpleBoardAdapter extends BoardAdapter{
     @Override
     public View createItemView(Context context,Object header_object,Object item_object,int column_position, int item_position) {
         View item = View.inflate(context, item_resource, null);
-        TextView textView = (TextView)item.findViewById(R.id.textView);
+        TextView textView = (TextView)item.findViewById(R.id.card_content);
         textView.setText(columns.get(column_position).objects.get(item_position).toString());
         return item;
     }

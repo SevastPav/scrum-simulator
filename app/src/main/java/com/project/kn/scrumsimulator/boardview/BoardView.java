@@ -1,7 +1,10 @@
 package com.project.kn.scrumsimulator.boardview;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -29,6 +33,8 @@ import android.widget.Scroller;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 
+import com.project.kn.scrumsimulator.ItemFormActivity;
+import com.project.kn.scrumsimulator.MainActivity;
 import com.project.kn.scrumsimulator.R;
 
 import java.util.ArrayList;
@@ -87,7 +93,15 @@ public class BoardView extends FrameLayout {
     private ItemClickListener itemClickListener = new ItemClickListener() {
         @Override
         public void onClick(View v, int column_pos, int item_pos) {
-
+            Item item = (Item) boardAdapter.columns.get(column_pos).objects.get(item_pos);
+//            EditText taskName = findViewById(R.id.editTextTextTaskName);
+//            EditText taskDescription = findViewById(R.id.editTextTextTaskDescription);
+//            taskName.setText(item.name);
+//            taskDescription.setText(item.description);
+            Intent intent = new Intent(v.getContext(), ItemFormActivity.class);
+            intent.putExtra("taskName", item.name);
+            intent.putExtra("taskDescription", item.description);
+            startActivity(v.getContext(), intent, null);
         }
     };
 
