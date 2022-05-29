@@ -23,12 +23,15 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
@@ -955,6 +958,22 @@ public class BoardView extends FrameLayout {
     }
 
     public void addBoardItem(final View view, final int column_pos){
+        Button assignButton = view.findViewById(R.id.button_to_assign);
+        assignButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout layout = (LinearLayout)view.getParent();
+                BoardItem parent_layout = (BoardItem)layout.getParent().getParent();
+                int pos = mParentLayout.indexOfChild(parent_layout);
+                int i = layout.indexOfChild(view);
+                //main activity
+                RelativeLayout relativeLayout = (RelativeLayout) view.getParent().getParent().getParent().getParent().getParent().getParent().getParent();
+                TextView assignPostion = relativeLayout.findViewById(R.id.assign_position);
+                assignPostion.setText("Выбрано " + pos + " " + i);
+                MainActivity.ITEM_POS = pos;
+                MainActivity.ITEM_I = i;
+            }
+        });
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

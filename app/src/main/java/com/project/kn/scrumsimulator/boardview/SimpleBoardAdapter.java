@@ -2,6 +2,7 @@ package com.project.kn.scrumsimulator.boardview;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.project.kn.scrumsimulator.R;

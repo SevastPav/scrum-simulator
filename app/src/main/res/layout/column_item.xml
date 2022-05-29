@@ -40,7 +40,18 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:text="Solution" />
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button_to_assign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_assign"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/card_content"
