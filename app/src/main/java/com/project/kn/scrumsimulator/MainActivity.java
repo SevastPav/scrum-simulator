@@ -1,8 +1,10 @@
 package com.project.kn.scrumsimulator;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +18,8 @@ import com.project.kn.scrumsimulator.boardview.BoardView;
 import com.project.kn.scrumsimulator.boardview.Item;
 import com.project.kn.scrumsimulator.boardview.SimpleBoardAdapter;
 import com.project.kn.scrumsimulator.config.DatabaseConfig;
+import com.project.kn.scrumsimulator.sprint.Player;
+import com.project.kn.scrumsimulator.sprint.SprintUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -30,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     ArrayList<Item> list = new ArrayList<>();
+    ArrayList<Player> players = new ArrayList<>();
+    public static int NUMBER_OF_SPRINT_DAY = 0;
+    public static int COUNT_OF_SPRINT_DAYS = 3;
+    public static int NUMBER_OF_SPRINT = 0;
+    public static int COUNT_OF_SPRINTS = 3;
 
     public static int ITEM_POS;
     public static int ITEM_I;
@@ -63,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         data.add(new SimpleBoardAdapter.SimpleColumn("TODO",(ArrayList)empty));
         data.add(new SimpleBoardAdapter.SimpleColumn("In progress",(ArrayList)empty));
         data.add(new SimpleBoardAdapter.SimpleColumn("Done",(ArrayList)empty));
+
+        players.add(new Player("player 1"));
+
         final SimpleBoardAdapter boardAdapter = new SimpleBoardAdapter(this,data);
         boardView.setAdapter(boardAdapter);
         boardView.setOnDoneListener(new BoardView.DoneListener() {
@@ -83,7 +95,24 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("work",msg);
                 TextView taskHours = boardAdapter.columns.get(ITEM_POS).views.get(ITEM_I).findViewById(R.id.task_hours);
                 taskHours.setText(String.valueOf(item.hoursCount));
+
+                //TODO здесь будет список игроков и мы должны вытаскивать того, кто выбран в mainActivity
+                players.get(0).isWorkToday = true;
+                if (isAllPlayersWorked()) {
+                    SprintUtils.incCountOfHoursInDay(randomHours);
+                    SprintUtils.allPlayersWorked(v);
+                }
             }
         });
+    }
+
+    private boolean isAllPlayersWorked() {
+
+        return players.stream().allMatch(p -> p.isWorkToday);
+    }
+
+    private boolean isSprintEnd() {
+
+        return NUMBER_OF_SPRINT_DAY >= COUNT_OF_SPRINT_DAYS;
     }
 }
