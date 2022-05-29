@@ -50,23 +50,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         workButton = findViewById(R.id.button_to_work);
+        SprintUtils.setProgressBars(this);
         final BoardView boardView = (BoardView)findViewById(R.id.boardView);
         boardView.SetColumnSnap(false);
         boardView.SetColumnSnap(true);
         final ArrayList<SimpleBoardAdapter.SimpleColumn> data = new ArrayList<>();
-        list.add(new Item("Task 1", "Description 1"));
-        list.add(new Item("Task 2", "Description 2"));
-        list.add(new Item("Task 3", "Description 3"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
-        list.add(new Item("Task 2"));
+        list.add(new Item("Создать каркас приложения", "Description 1", 1, 10));
+        list.add(new Item("Подключить базу данных", "Description 1", 2, 2));
+        list.add(new Item("Создать таблицы в базе данных", "Description 1", 3, 5));
+        list.add(new Item("Добавить интеграцию с сервисами", "Description 1", 4, 7));
+        list.add(new Item("Добавить документацию", "Description 1", 5, 2));
         final ArrayList<Item> empty = new ArrayList<>();
         data.add(new SimpleBoardAdapter.SimpleColumn("Backlog",(ArrayList)list));
         data.add(new SimpleBoardAdapter.SimpleColumn("TODO",(ArrayList)empty));
@@ -86,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         workButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SprintUtils.updateProgressBars();
                 Random random = new Random();
                 Item item = (Item) boardAdapter.columns.get(ITEM_POS).objects.get(ITEM_I);
                 int randomHours = random.nextInt(8 - 1 + 1) + 1;
@@ -95,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("work",msg);
                 TextView taskHours = boardAdapter.columns.get(ITEM_POS).views.get(ITEM_I).findViewById(R.id.task_hours);
                 taskHours.setText(String.valueOf(item.hoursCount));
+
+                if (item.hoursCount == 0) {
+                    workButton.setEnabled(false);
+                }
 
                 //TODO здесь будет список игроков и мы должны вытаскивать того, кто выбран в mainActivity
                 players.get(0).isWorkToday = true;

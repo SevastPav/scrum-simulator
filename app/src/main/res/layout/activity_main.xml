@@ -6,21 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/assign_position"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="290dp"
-        android:text="Нажмите Выбрать" />
-
     <Button
         android:id="@+id/button_to_work"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="200dp"
         android:text="@string/button_work"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:enabled="false"/>
 
     <com.project.kn.scrumsimulator.boardview.BoardView
         android:id="@+id/boardView"
@@ -28,4 +23,44 @@
         android:layout_height="match_parent"
         android:layout_marginTop="128dp"
         boardview:boardItemBackground="@color/white" />
+
+    <ProgressBar
+        android:id="@+id/progressBarDay"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="50dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarSprint"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="50dp" />
+
+    <TextView
+        android:id="@+id/textViewDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="110dp"
+        android:text="день" />
+
+    <TextView
+        android:id="@+id/textViewSprint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="110dp"
+        android:text="спринт" />
 </RelativeLayout>

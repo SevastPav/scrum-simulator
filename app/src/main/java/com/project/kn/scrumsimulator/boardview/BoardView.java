@@ -974,11 +974,17 @@ public class BoardView extends FrameLayout {
                 int pos = mParentLayout.indexOfChild(parent_layout);
                 int i = layout.indexOfChild(view);
                 //main activity
-                RelativeLayout relativeLayout = (RelativeLayout) view.getParent().getParent().getParent().getParent().getParent().getParent().getParent();
-                TextView assignPostion = relativeLayout.findViewById(R.id.assign_position);
-                assignPostion.setText("Выбрано " + pos + " " + i);
                 MainActivity.ITEM_POS = pos;
                 MainActivity.ITEM_I = i;
+                Log.e("item", "choose " + pos + " " + i);
+                //TODO сделать нормальный enum для колонки IN PROGRESS
+                //делаем все задачи активными
+                boardAdapter.columns.get(2).views.forEach(item -> {
+                    Button assignButton = item.findViewById(R.id.button_to_assign);
+                    assignButton.setVisibility(VISIBLE);
+                });
+                boardAdapter.columns.get(pos).views.get(i).findViewById(R.id.button_to_assign).setVisibility(INVISIBLE);
+                view.getRootView().findViewById(R.id.button_to_work).setEnabled(true);
             }
         });
         view.setOnClickListener(new OnClickListener() {

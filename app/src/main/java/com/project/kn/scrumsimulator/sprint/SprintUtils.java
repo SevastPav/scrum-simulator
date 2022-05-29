@@ -1,33 +1,45 @@
 package com.project.kn.scrumsimulator.sprint;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.project.kn.scrumsimulator.MainActivity;
+import com.project.kn.scrumsimulator.R;
+import com.project.kn.scrumsimulator.StartPage;
+
 public class SprintUtils {
 
-    public static int NUMBER_OF_SPRINT_DAY = 0;
+    public static int NUMBER_OF_SPRINT_DAY = 1;
     public static int COUNT_OF_SPRINT_DAYS = 3;
-    public static int NUMBER_OF_SPRINT = 0;
+    public static int NUMBER_OF_SPRINT = 1;
     public static int COUNT_OF_SPRINTS = 3;
     public static int COUNT_OF_HOURS_IN_SPRINT = 0;
     public static int COUNT_OF_HOURS_IN_ALL_SPRINTS = 0;
+
+    public static ProgressBar progressBarDay, progressBarSprint;
 
     public static void allPlayersWorked(View v) {
 
         Log.e("day", "day is end");
         incSprintDay();
         if (isSprintEnd()){
-            String msg = "sprint end. Count of hours = " + COUNT_OF_HOURS_IN_SPRINT;
+            String msg = "Спринт закончен. Общее количество продуктивных часов = " + COUNT_OF_HOURS_IN_SPRINT;
             Log.e("sprint", msg);
-            openSiteDialogWithMsg(v, msg);
             incSprintNumber();
             if (isSprintsEnd()){
-                msg = "all sprints end. Count of hours = " + COUNT_OF_HOURS_IN_ALL_SPRINTS;
+                msg = "Поздравляем, все спринты завершены! Общее количество продуктивных часов = " + COUNT_OF_HOURS_IN_ALL_SPRINTS;
                 Log.e("sprint", msg);
-                openSiteDialogWithMsg(v, msg);
+                openSiteDialogWithMsg(v, msg, true);
+            } else {
+                Log.e("sprint", msg);
+                openSiteDialogWithMsg(v, msg, false);
             }
         }
     }
@@ -43,12 +55,12 @@ public class SprintUtils {
 
     public static boolean isSprintEnd() {
 
-        return NUMBER_OF_SPRINT_DAY >= COUNT_OF_SPRINT_DAYS;
+        return NUMBER_OF_SPRINT_DAY > COUNT_OF_SPRINT_DAYS;
     }
 
     public static void incSprintNumber() {
 
-        NUMBER_OF_SPRINT_DAY = 0;
+        NUMBER_OF_SPRINT_DAY = 1;
         NUMBER_OF_SPRINT++;
         COUNT_OF_HOURS_IN_ALL_SPRINTS += COUNT_OF_HOURS_IN_SPRINT;
         COUNT_OF_HOURS_IN_SPRINT = 0;
@@ -56,10 +68,17 @@ public class SprintUtils {
 
     public static boolean isSprintsEnd() {
 
-        return NUMBER_OF_SPRINT >= COUNT_OF_SPRINTS;
+        return NUMBER_OF_SPRINT > COUNT_OF_SPRINTS;
     }
 
-    private static void openSiteDialogWithMsg(View v, String msg) {
+    private static void newGame() {
+        NUMBER_OF_SPRINT_DAY = 1;
+        NUMBER_OF_SPRINT = 1;
+        COUNT_OF_HOURS_IN_SPRINT = 0;
+        COUNT_OF_HOURS_IN_ALL_SPRINTS = 0;
+    }
+
+    private static void openSiteDialogWithMsg(View v, String msg, boolean isSprintsEnded) {
 
         final AlertDialog aboutDialog = new AlertDialog.Builder(v.getContext())
                 .setMessage(msg)
@@ -67,10 +86,29 @@ public class SprintUtils {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
+                        if (!isSprintsEnded) {
+                            return;
+                        }
+                        newGame();
+                        Intent intent = new Intent(v.getContext(), StartPage.class);
+                        startActivity(v.getContext(), intent, null);
                     }
                 }).create();
 
         aboutDialog.show();
+    }
+
+    public static void setProgressBars(MainActivity mainActivity) {
+
+        progressBarDay = (ProgressBar)mainActivity.findViewById(R.id.progressBarDay);
+        progressBarSprint = (ProgressBar)mainActivity.findViewById(R.id.progressBarSprint);
+        progressBarDay.setMax(COUNT_OF_SPRINT_DAYS);
+        progressBarSprint.setMax(COUNT_OF_SPRINTS);
+    }
+
+    public static void updateProgressBars() {
+
+        progressBarDay.setProgress(NUMBER_OF_SPRINT_DAY);
+        progressBarSprint.setProgress(NUMBER_OF_SPRINT);
     }
 }

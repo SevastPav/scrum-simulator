@@ -58,12 +58,25 @@ public class SimpleBoardAdapter extends BoardAdapter{
         return false;
     }
 
+//    @Override
+//    public View createItemView(Context context,Object header_object,Object item_object,int column_position, int item_position) {
+//        View item = View.inflate(context, item_resource, null);
+//        TextView textView = (TextView)item.findViewById(R.id.card_content);
+//        textView.setText(columns.get(column_position).objects.get(item_position).toString());
+//        return item;
+//    }
+
     @Override
     public View createItemView(Context context,Object header_object,Object item_object,int column_position, int item_position) {
-        View item = View.inflate(context, item_resource, null);
-        TextView textView = (TextView)item.findViewById(R.id.card_content);
-        textView.setText(columns.get(column_position).objects.get(item_position).toString());
-        return item;
+        View itemView = View.inflate(context, item_resource, null);
+        Item item = (Item) columns.get(column_position).objects.get(item_position);
+        TextView nameView = (TextView) itemView.findViewById(R.id.card_content);
+        nameView.setText(item.name);
+        TextView taskHoursView = (TextView) itemView.findViewById(R.id.task_hours);
+        taskHoursView.setText(String.valueOf(item.hoursCount));
+        TextView taskPriorityView = (TextView) itemView.findViewById(R.id.task_priority);
+        taskPriorityView.setText(String.valueOf(item.priority));
+        return itemView;
     }
 
     @Override

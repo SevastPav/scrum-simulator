@@ -17,7 +17,15 @@ public class Item{
     public Item(String item, String description){
         this.name = item;
         this.description = description;
+        this.priority = 1;
         this.hoursCount = 20;
+    }
+
+    public Item(String item, String description, int priority, int hoursCount){
+        this.name = item;
+        this.description = description;
+        this.priority = priority;
+        this.hoursCount = hoursCount;
     }
 
     public String toString(){
