@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class MainActivityOld extends AppCompatActivity {
 
-    public static EditText emailField, passwordField;
+    public static EditText loginField, passwordField;
     public static Button loginButton, registerButton;
 
     @Override
@@ -26,7 +26,7 @@ public class MainActivityOld extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_old);
 
-        emailField = findViewById(R.id.login_email);
+        loginField = findViewById(R.id.login);
         passwordField = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.button_login);
         registerButton = findViewById(R.id.button_to_register);
@@ -37,6 +37,14 @@ public class MainActivityOld extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), StartPage.class);
                 startActivity(intent);
             }
         });
