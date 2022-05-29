@@ -8,69 +8,91 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="256dp"
+        android:layout_width="230dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
+        <ImageView
+            android:id="@+id/cardImage"
+            android:layout_width="230dp"
+            android:layout_height="150dp"
+            android:contentDescription="card"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/priority"
-                android:layout_width="29dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/card_type"
-                android:layout_width="242dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="Solution" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_task_card" />
 
         <Button
             android:id="@+id/button_to_assign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="62dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="12dp"
+            android:shadowColor="#BBBBBB"
             android:text="@string/button_assign"
-            android:textSize="12sp"
+            android:textSize="8sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/card_content"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="36dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:breakStrategy="high_quality"
+            android:gravity="center"
             android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/task_hours"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="# 4" />
 
         <TextView
             android:id="@+id/task_hours"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_width="37dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="12dp"
+            android:breakStrategy="high_quality"
+            android:gravity="center"
             android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="14" />
+
+        <TextView
+            android:id="@+id/card_content"
+            android:layout_width="163dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="56dp"
+            android:text="Подключить базу"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
