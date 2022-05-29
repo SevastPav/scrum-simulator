@@ -711,6 +711,13 @@ public class BoardView extends FrameLayout {
             LinearLayout parentLayout = (LinearLayout)(mobileView.getParent().getParent().getParent().getParent());
             int columnPos = parentLayout.indexOfChild((View)(mobileView.getParent().getParent().getParent()));
             int pos = ((LinearLayout)mobileView.getParent()).indexOfChild(mobileView);
+            View assignButton = mobileView.findViewById(R.id.button_to_assign);
+            //TODO сделать enum для колонок
+            if (columnPos == 2) {
+                assignButton.setVisibility(VISIBLE);
+            } else {
+                assignButton.setVisibility(INVISIBLE);
+            }
             View tmpView = boardAdapter.columns.get(originalPosition).views.get(originalItemPosition);
             boardAdapter.columns.get(originalPosition).views.remove(originalItemPosition);
             boardAdapter.columns.get(columnPos).views.add(pos, tmpView);
