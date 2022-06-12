@@ -1,6 +1,8 @@
 package com.project.kn.scrumsimulator.events;
 
-public abstract class Card {
+import java.io.Serializable;
+
+public abstract class Card implements Serializable {
 
     private CardType cardType;
 

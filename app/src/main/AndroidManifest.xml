@@ -22,6 +22,7 @@
         <activity android:name=".ItemFormActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".CardsActivity" />
         <activity
             android:name=".MainActivityOld"
             android:exported="true">

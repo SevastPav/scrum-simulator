@@ -24,14 +24,11 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
@@ -39,6 +36,7 @@ import androidx.core.view.ViewCompat;
 import com.project.kn.scrumsimulator.ItemFormActivity;
 import com.project.kn.scrumsimulator.MainActivity;
 import com.project.kn.scrumsimulator.R;
+import com.project.kn.scrumsimulator.events.Card;
 
 import java.util.ArrayList;
 
@@ -96,15 +94,13 @@ public class BoardView extends FrameLayout {
     private ItemClickListener itemClickListener = new ItemClickListener() {
         @Override
         public void onClick(View v, int column_pos, int item_pos) {
-            Item item = (Item) boardAdapter.columns.get(column_pos).objects.get(item_pos);
-//            EditText taskName = findViewById(R.id.editTextTextTaskName);
-//            EditText taskDescription = findViewById(R.id.editTextTextTaskDescription);
-//            taskName.setText(item.name);
-//            taskDescription.setText(item.description);
-            Intent intent = new Intent(v.getContext(), ItemFormActivity.class);
-            intent.putExtra("taskName", item.name);
-            intent.putExtra("taskDescription", item.description);
-            startActivity(v.getContext(), intent, null);
+            Card card = (Card) boardAdapter.columns.get(column_pos).objects.get(item_pos);
+            if (card instanceof Task){
+                Intent intent = new Intent(v.getContext(), ItemFormActivity.class);
+                intent.putExtra("taskName", card.getName());
+                intent.putExtra("taskDescription", card.getDescription());
+                startActivity(v.getContext(), intent, null);
+            }
         }
     };
 

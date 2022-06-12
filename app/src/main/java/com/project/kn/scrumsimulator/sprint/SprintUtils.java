@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.project.kn.scrumsimulator.CardsActivity;
 import com.project.kn.scrumsimulator.MainActivity;
 import com.project.kn.scrumsimulator.R;
 import com.project.kn.scrumsimulator.StartPage;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class SprintUtils {
 
     public static int NUMBER_OF_SPRINT_DAY = 1;
-    public static int COUNT_OF_SPRINT_DAYS = 3;
+    public static int COUNT_OF_SPRINT_DAYS = 7;
     public static int NUMBER_OF_SPRINT = 1;
     public static int COUNT_OF_SPRINTS = 3;
     public static int COUNT_OF_HOURS_IN_SPRINT = 0;

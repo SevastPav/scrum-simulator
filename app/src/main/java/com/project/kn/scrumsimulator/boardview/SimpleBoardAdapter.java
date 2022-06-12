@@ -2,16 +2,24 @@ package com.project.kn.scrumsimulator.boardview;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.project.kn.scrumsimulator.R;
+import com.project.kn.scrumsimulator.events.Card;
+import com.project.kn.scrumsimulator.events.Event;
+import com.project.kn.scrumsimulator.events.Problem;
+import com.project.kn.scrumsimulator.events.Solution;
 
 import java.util.ArrayList;
 
 public class SimpleBoardAdapter extends BoardAdapter{
     int header_resource;
-    int item_resource;
+    int task_resource;
+    int problem_resource;
+    int solution_resource;
+    int positive_event_resource;
+    int negative_event_resource;
+
     public SimpleBoardAdapter instance;
 
     public SimpleBoardAdapter(Context context, ArrayList<SimpleColumn> data) {
@@ -19,7 +27,11 @@ public class SimpleBoardAdapter extends BoardAdapter{
         instance = this;
         this.columns = (ArrayList)data;
         this.header_resource = R.layout.column_header;
-        this.item_resource = R.layout.column_item;
+        this.task_resource = R.layout.column_item;
+        this.problem_resource = R.layout.problem_card;
+        this.solution_resource = R.layout.solution_card;
+        this.positive_event_resource = R.layout.event_good_card;
+        this.negative_event_resource = R.layout.event_bad_card;
     }
 
     @Override
@@ -68,15 +80,43 @@ public class SimpleBoardAdapter extends BoardAdapter{
 
     @Override
     public View createItemView(Context context,Object header_object,Object item_object,int column_position, int item_position) {
-        View itemView = View.inflate(context, item_resource, null);
-        Item item = (Item) columns.get(column_position).objects.get(item_position);
-        TextView nameView = (TextView) itemView.findViewById(R.id.card_content);
-        nameView.setText(item.name);
-        TextView taskHoursView = (TextView) itemView.findViewById(R.id.task_hours);
-        taskHoursView.setText(String.valueOf(item.hoursCount));
-        TextView taskPriorityView = (TextView) itemView.findViewById(R.id.task_priority);
-        taskPriorityView.setText(String.valueOf(item.priority));
-        return itemView;
+
+        Card card = (Card) columns.get(column_position).objects.get(item_position);
+        if (card instanceof Task) {
+            View taskView = View.inflate(context, task_resource, null);
+            Task task = (Task) card;
+            TextView nameView = (TextView) taskView.findViewById(R.id.card_content);
+            nameView.setText(task.getName());
+            TextView taskHoursView = (TextView) taskView.findViewById(R.id.task_hours);
+            taskHoursView.setText(String.valueOf(task.hoursCount));
+            TextView taskPriorityView = (TextView) taskView.findViewById(R.id.task_priority);
+            taskPriorityView.setText(String.valueOf(task.priority));
+            return taskView;
+        }
+        if (card instanceof Problem) {
+            View problemView = View.inflate(context, problem_resource, null);
+            Problem problem = (Problem) card;
+            TextView nameView = (TextView) problemView.findViewById(R.id.card_content);
+            nameView.setText(problem.getName());
+            return problemView;
+        }
+        if (card instanceof Solution) {
+            View solutionView = View.inflate(context, solution_resource, null);
+            Solution solution = (Solution) card;
+            TextView nameView = (TextView) solutionView.findViewById(R.id.card_content);
+            nameView.setText(solution.getName());
+            return solutionView;
+        }
+        if (card instanceof Event) {
+            Event event = (Event) card;
+            int resource = event.isPositive() ?positive_event_resource :negative_event_resource;
+            View eventView = View.inflate(context, resource, null);
+            TextView nameView = (TextView) eventView.findViewById(R.id.card_content);
+            nameView.setText(event.getName());
+            return eventView;
+        }
+
+        return null;
     }
 
     @Override
@@ -110,7 +150,7 @@ public class SimpleBoardAdapter extends BoardAdapter{
         public SimpleColumn(String title, ArrayList<Object> items){
             super();
             this.title = title;
-            this.header_object = new Item(title);
+            this.header_object = new Task(title);
             this.objects = items;
         }
     }
