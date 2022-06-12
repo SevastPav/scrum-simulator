@@ -976,10 +976,14 @@ public class BoardView extends FrameLayout {
                     MainActivity.ITEM_I = i;
                     Log.e("item", "choose " + pos + " " + i);
                     //делаем все задачи активными
-                    boardAdapter.columns.get(ColumnName.IN_PROGRESS.columnNumber).views.forEach(item -> {
-                        Button assignButton = item.findViewById(R.id.button_to_assign);
-                        assignButton.setVisibility(VISIBLE);
-                    });
+                    for(int j=0; j<boardAdapter.columns.get(ColumnName.IN_PROGRESS.columnNumber).views.size(); j++) {
+                        Task task = (Task) boardAdapter.columns.get(ColumnName.IN_PROGRESS.columnNumber).objects.get(j);
+                        View taskView = boardAdapter.columns.get(ColumnName.IN_PROGRESS.columnNumber).views.get(j);
+                        if (task.hoursCount > 0) {
+                            Button assignButton = taskView.findViewById(R.id.button_to_assign);
+                            assignButton.setVisibility(VISIBLE);
+                        }
+                    }
                     boardAdapter.columns.get(pos).views.get(i).findViewById(R.id.button_to_assign).setVisibility(INVISIBLE);
                     view.getRootView().findViewById(R.id.button_to_work).setEnabled(true);
                 }

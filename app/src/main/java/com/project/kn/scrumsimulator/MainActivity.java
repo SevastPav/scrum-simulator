@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static Button workButton;
     public static BoardView boardView;
+    private static TextView currentPlayerView;
 
     Context context = this;
 
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         workButton = findViewById(R.id.button_to_work);
+        currentPlayerView = findViewById(R.id.textViewCurrentPlayer);
         SprintUtils.setProgressBars(this);
         boardView = (BoardView)findViewById(R.id.boardView);
         boardView.SetColumnSnap(false);
@@ -82,11 +84,12 @@ public class MainActivity extends AppCompatActivity {
         data.add(new SimpleBoardAdapter.SimpleColumn("In progress",(ArrayList)empty));
         data.add(new SimpleBoardAdapter.SimpleColumn("Done",(ArrayList)empty));
 
-        players.add(new Player("player 1"));
-        players.add(new Player("player 2"));
-        players.add(new Player("player 3"));
+        players.add(new Player("Andrew"));
+        players.add(new Player("Pavel"));
+        players.add(new Player("Alex"));
 
         currentPlayer = players.get(0);
+        currentPlayerView.setText(currentPlayer.name);
 
         final SimpleBoardAdapter boardAdapter = new SimpleBoardAdapter(this,data);
         boardView.setAdapter(boardAdapter);
@@ -127,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     SprintUtils.allPlayersWorked(v);
                 }
                 currentPlayer = getRandomUnworkedPlayer();
+                currentPlayerView.setText(currentPlayer.name);
             }
         });
     }

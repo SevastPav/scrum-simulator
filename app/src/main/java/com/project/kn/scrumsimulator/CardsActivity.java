@@ -94,6 +94,7 @@ public class CardsActivity extends AppCompatActivity {
                         }
                     }
                     SprintUtils.dropProblemCard(problem);
+                    SprintUtils.dropSolutionCard(solution);
                 } else {
                     openSiteDialogWithMsg(v, false);
                 }
