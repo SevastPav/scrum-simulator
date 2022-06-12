@@ -1,28 +1,30 @@
 package com.project.kn.scrumsimulator;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.os.Build;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewParent;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.project.kn.scrumsimulator.boardview.BoardItem;
 import com.project.kn.scrumsimulator.boardview.BoardView;
 import com.project.kn.scrumsimulator.boardview.Item;
 import com.project.kn.scrumsimulator.boardview.SimpleBoardAdapter;
-import com.project.kn.scrumsimulator.config.DatabaseConfig;
+import com.project.kn.scrumsimulator.events.Card;
+import com.project.kn.scrumsimulator.events.CardUtils;
+import com.project.kn.scrumsimulator.events.Event;
+import com.project.kn.scrumsimulator.events.Problem;
+import com.project.kn.scrumsimulator.events.Solution;
 import com.project.kn.scrumsimulator.sprint.Player;
 import com.project.kn.scrumsimulator.sprint.SprintUtils;
+import com.project.kn.scrumsimulator.utils.RandomUtils;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import lombok.Getter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +34,18 @@ public class MainActivity extends AppCompatActivity {
 //        setContentView(R.layout.activity_main_old);
 //        DatabaseConfig db = new DatabaseConfig();
 //    }
+
+    private static ArrayList<Card> cards;
+
+    static {
+        cards = new ArrayList<>();
+        cards.add(new Solution("solution 1", "solution description"));
+        cards.add(new Solution("solution 2", "solution description"));
+        cards.add(new Problem("problem 1", "problem description"));
+        cards.add(new Problem("problem 2", "problem description"));
+        cards.add(new Event("event 2", "event description"));
+        cards.add(new Event("event 2", "event description"));
+    }
 
     ArrayList<Item> list = new ArrayList<>();
     ArrayList<Player> players = new ArrayList<>();
@@ -44,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     public static int ITEM_I;
 
     public static Button workButton;
+
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +95,11 @@ public class MainActivity extends AppCompatActivity {
         workButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CardUtils.show(context);
+
                 SprintUtils.updateProgressBars();
-                Random random = new Random();
                 Item item = (Item) boardAdapter.columns.get(ITEM_POS).objects.get(ITEM_I);
-                int randomHours = random.nextInt(8 - 1 + 1) + 1;
+                int randomHours = RandomUtils.getRandomIntBetween(1, 8);
                 int newHours = item.hoursCount - randomHours;
                 item.hoursCount = Math.max(newHours, 0);
                 String msg = String.format("Списано %d часов с карточки %d : %d", randomHours, ITEM_POS, ITEM_I);
@@ -94,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
                     workButton.setEnabled(false);
                 }
 
+                //Выводим информацию о событии и добавляем в спринт
+                CardUtils.generateCard(v);
+
                 //TODO здесь будет список игроков и мы должны вытаскивать того, кто выбран в mainActivity
                 players.get(0).isWorkToday = true;
                 if (isAllPlayersWorked()) {
@@ -102,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public static ArrayList<Card> getCards() {
+
+        return cards;
     }
 
     private boolean isAllPlayersWorked() {

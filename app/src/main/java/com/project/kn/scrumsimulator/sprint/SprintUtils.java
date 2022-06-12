@@ -13,6 +13,9 @@ import androidx.appcompat.app.AlertDialog;
 import com.project.kn.scrumsimulator.MainActivity;
 import com.project.kn.scrumsimulator.R;
 import com.project.kn.scrumsimulator.StartPage;
+import com.project.kn.scrumsimulator.events.Card;
+
+import java.util.ArrayList;
 
 public class SprintUtils {
 
@@ -24,6 +27,23 @@ public class SprintUtils {
     public static int COUNT_OF_HOURS_IN_ALL_SPRINTS = 0;
 
     public static ProgressBar progressBarDay, progressBarSprint;
+
+    private static ArrayList<Card> cards = new ArrayList<>();
+
+    public static void addCard(Card card) {
+
+        cards.add(card);
+    }
+
+    public static void dropCards() {
+
+        cards.clear();
+    }
+
+    public static ArrayList<Card> getCards() {
+
+        return cards;
+    }
 
     public static void allPlayersWorked(View v) {
 
