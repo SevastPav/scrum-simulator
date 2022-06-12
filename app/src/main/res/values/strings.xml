@@ -15,4 +15,5 @@
     <string name="button_solve">Решить</string>
     <string name="button_main">Завершить обсуждение</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="button_to_team_manage">команда</string>
 </resources>
