@@ -11,4 +11,5 @@
     <string name="button_assign">Взять</string>
     <string name="button_work">Работа</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="button_to_team_manage">команда</string>
 </resources>

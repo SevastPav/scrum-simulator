@@ -55,6 +55,7 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="#BBBBBB"
         android:text="@string/button_exit"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/login_password"
