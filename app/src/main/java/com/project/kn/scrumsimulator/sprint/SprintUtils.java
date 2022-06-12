@@ -15,8 +15,11 @@ import com.project.kn.scrumsimulator.MainActivity;
 import com.project.kn.scrumsimulator.R;
 import com.project.kn.scrumsimulator.StartPage;
 import com.project.kn.scrumsimulator.events.Card;
+import com.project.kn.scrumsimulator.events.CardType;
+import com.project.kn.scrumsimulator.events.Problem;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class SprintUtils {
 
@@ -39,6 +42,16 @@ public class SprintUtils {
     public static void dropCards() {
 
         cards.clear();
+    }
+
+    public static void dropProblemCard(Problem card) {
+
+        cards.removeIf(p -> p instanceof Problem && (((Problem) p).getId()).equals(card.getId()));
+    }
+
+    public static void dropCardsWithType(CardType type) {
+
+        cards = cards.stream().filter(card -> !card.getCardType().equals(type)).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public static ArrayList<Card> getCards() {

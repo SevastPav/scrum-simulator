@@ -29,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     static {
         cards = new ArrayList<>();
-        cards.add(new Solution("solution 1", "solution description"));
-        cards.add(new Solution("solution 2", "solution description"));
-        cards.add(new Problem("problem 1", "problem description"));
-        cards.add(new Problem("problem 2", "problem description"));
+        cards.add(new Solution("solution 1", "solution description", 1));
+        cards.add(new Solution("solution 2", "solution description", 2));
+        cards.add(new Problem("problem 1", "problem description", 1));
+        cards.add(new Problem("problem 2", "problem description", 2));
         cards.add(new Event("event 2", "event description", true));
         cards.add(new Event("event 2", "event description", false));
     }
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public static int ITEM_I;
 
     public static Button workButton;
+    public static BoardView boardView;
 
     Context context = this;
 
@@ -58,22 +59,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         workButton = findViewById(R.id.button_to_work);
         SprintUtils.setProgressBars(this);
-        final BoardView boardView = (BoardView)findViewById(R.id.boardView);
+        boardView = (BoardView)findViewById(R.id.boardView);
         boardView.SetColumnSnap(false);
         boardView.SetColumnSnap(true);
         final ArrayList<SimpleBoardAdapter.SimpleColumn> data = new ArrayList<>();
-        list.add(new Task("Пользователи могут безопасно обмениваться e-mail со списком заранее определенных получателей", "Description 1", 1, 24));
-        list.add(new Task("Пользователи могут безопасно пересылать большие файлы", "Description 1", 2, 21));
-        list.add(new Task("Пользователи могут установить ограничение по времени для чтения писем", "Description 1", 3, 27));
-        list.add(new Task("Пользователи могут отправлять письма любым получателям", "Description 1", 4, 30));
-        list.add(new Task("Администратор компании может отслеживать письма", "Description 1", 5, 16));
-        list.add(new Task("Каждая организация может устанавливать политику безопасности и определить группы получателей", "Description 1", 6, 24));
-        list.add(new Task("Пользователи могут эффективно управлять своими письмами", "Description 1", 7, 43));
-        list.add(new Task("Пользователи и администратормы могут безопасно делать резервные копии", "Description 1", 8, 23));
-        list.add(new Task("Пользователи и администраторы могут полностью удалять письма", "Description 1", 9, 36));
-        list.add(new Task("Ползователи могут работать со своей почтой с мобильных телефонов", "Description 1", 10, 68));
-        list.add(new Task("Пользователи могут безопасно обмениваться короткими сообщениями с любыми получателями", "Description 1", 11, 28));
-        list.add(new Task("Пользователи не хотят получать спам-письма", "Description 1", 12, 24));
+        list.add(new Task("Пользователи могут безопасно обмениваться e-mail со списком заранее определенных получателей", "Description 1", 1, 24, 1));
+        list.add(new Task("Пользователи могут безопасно пересылать большие файлы", "Description 1", 2, 21, 2));
+        list.add(new Task("Пользователи могут установить ограничение по времени для чтения писем", "Description 1", 3, 27, 3));
+        list.add(new Task("Пользователи могут отправлять письма любым получателям", "Description 1", 4, 30, 3));
+        list.add(new Task("Администратор компании может отслеживать письма", "Description 1", 5, 16, 4));
+        list.add(new Task("Каждая организация может устанавливать политику безопасности и определить группы получателей", "Description 1", 6, 24, 5));
+        list.add(new Task("Пользователи могут эффективно управлять своими письмами", "Description 1", 7, 43, 6));
+        list.add(new Task("Пользователи и администратормы могут безопасно делать резервные копии", "Description 1", 8, 23, 7));
+        list.add(new Task("Пользователи и администраторы могут полностью удалять письма", "Description 1", 9, 36, 8));
+        list.add(new Task("Ползователи могут работать со своей почтой с мобильных телефонов", "Description 1", 10, 68, 9));
+        list.add(new Task("Пользователи могут безопасно обмениваться короткими сообщениями с любыми получателями", "Description 1", 11, 28, 10));
+        list.add(new Task("Пользователи не хотят получать спам-письма", "Description 1", 12, 24, 11));
 
         final ArrayList<Task> empty = new ArrayList<>();
         data.add(new SimpleBoardAdapter.SimpleColumn("Backlog",(ArrayList)list));
@@ -114,7 +115,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //Выводим информацию о событии и добавляем в спринт
-                CardUtils.generateCard(v);
+                Card card = CardUtils.generateCard(v, item.id);
+                if (card instanceof Problem) {
+                    item.addProblem((Problem) card);
+                    boardAdapter.columns.get(ITEM_POS).views.get(ITEM_I).findViewById(R.id.cardImageProblem).setVisibility(View.VISIBLE);
+                }
 
                 currentPlayer.isWorkToday = true;
                 if (isAllPlayersWorked()) {
@@ -124,6 +129,10 @@ public class MainActivity extends AppCompatActivity {
                 currentPlayer = getRandomUnworkedPlayer();
             }
         });
+    }
+
+    public static BoardView getBoardView() {
+        return boardView;
     }
 
     public static ArrayList<Card> getCards() {

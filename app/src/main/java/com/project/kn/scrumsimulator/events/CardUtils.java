@@ -10,21 +10,31 @@ import android.widget.TextView;
 import com.project.kn.scrumsimulator.CardsActivity;
 import com.project.kn.scrumsimulator.MainActivity;
 import com.project.kn.scrumsimulator.R;
+import com.project.kn.scrumsimulator.boardview.BoardAdapter;
+import com.project.kn.scrumsimulator.boardview.ColumnName;
+import com.project.kn.scrumsimulator.boardview.Task;
 import com.project.kn.scrumsimulator.sprint.SprintUtils;
 import com.project.kn.scrumsimulator.utils.RandomUtils;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardUtils {
 
-    public static void generateCard(View v) {
+    public static Card generateCard(View v, int taskId) {
 
         ArrayList<Card> cards = MainActivity.getCards();
         int i = RandomUtils.getRandomIntBetween(0, cards.size() - 1);
         Card card = cards.get(i);
+        if (card instanceof Problem) {
+            card = new Problem(card.getName(), card.getDescription(), ((Problem) card).getGroup());
+            ((Problem) card).setTaskId(taskId);
+        }
         SprintUtils.addCard(card);
 
         openSiteDialogWithMsg(v, card);
+        return card;
     }
 
     private static void openSiteDialogWithMsg(View v, Card card) {
@@ -59,9 +69,17 @@ public class CardUtils {
 
                 dlg.dismiss();
                 if (MainActivity.isAllPlayersWorked()) {
+                    ArrayList<BoardAdapter.Column> taskColumns = MainActivity.boardView.boardAdapter.columns;
+                    ArrayList<ArrayList<Task>> columnsObjects = new ArrayList<>();
+                    for (BoardAdapter.Column c : taskColumns) {
+                        ArrayList<Object> objects = c.objects;
+                        columnsObjects.add(objects.stream().map(o -> (Task) o).collect(Collectors.toCollection(ArrayList::new)));
+                    }
                     MainActivity.getPlayers().forEach(p -> p.isWorkToday = false);
                     Intent intent = new Intent(v.getContext(), CardsActivity.class);
                     intent.putExtra("cards", SprintUtils.getCards());
+//                    intent.putExtra("columnsObjects", columnsObjects);
+//                    intent.putExtra("taskViews", taskColumns);
                     v.getContext().startActivity(intent, null);
                 }
             }

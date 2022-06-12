@@ -33,6 +33,7 @@ import android.widget.Scroller;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 
+import com.project.kn.scrumsimulator.CardsActivity;
 import com.project.kn.scrumsimulator.ItemFormActivity;
 import com.project.kn.scrumsimulator.MainActivity;
 import com.project.kn.scrumsimulator.R;
@@ -962,27 +963,76 @@ public class BoardView extends FrameLayout {
 
     public void addBoardItem(final View view, final int column_pos){
         Button assignButton = view.findViewById(R.id.button_to_assign);
-        assignButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout layout = (LinearLayout)view.getParent();
-                BoardItem parent_layout = (BoardItem)layout.getParent().getParent();
-                int pos = mParentLayout.indexOfChild(parent_layout);
-                int i = layout.indexOfChild(view);
-                //main activity
-                MainActivity.ITEM_POS = pos;
-                MainActivity.ITEM_I = i;
-                Log.e("item", "choose " + pos + " " + i);
-                //TODO сделать нормальный enum для колонки IN PROGRESS
-                //делаем все задачи активными
-                boardAdapter.columns.get(2).views.forEach(item -> {
-                    Button assignButton = item.findViewById(R.id.button_to_assign);
-                    assignButton.setVisibility(VISIBLE);
-                });
-                boardAdapter.columns.get(pos).views.get(i).findViewById(R.id.button_to_assign).setVisibility(INVISIBLE);
-                view.getRootView().findViewById(R.id.button_to_work).setEnabled(true);
-            }
-        });
+        if (assignButton != null) {
+            assignButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LinearLayout layout = (LinearLayout)view.getParent();
+                    BoardItem parent_layout = (BoardItem)layout.getParent().getParent();
+                    int pos = mParentLayout.indexOfChild(parent_layout);
+                    int i = layout.indexOfChild(view);
+                    //main activity
+                    MainActivity.ITEM_POS = pos;
+                    MainActivity.ITEM_I = i;
+                    Log.e("item", "choose " + pos + " " + i);
+                    //делаем все задачи активными
+                    boardAdapter.columns.get(ColumnName.IN_PROGRESS.columnNumber).views.forEach(item -> {
+                        Button assignButton = item.findViewById(R.id.button_to_assign);
+                        assignButton.setVisibility(VISIBLE);
+                    });
+                    boardAdapter.columns.get(pos).views.get(i).findViewById(R.id.button_to_assign).setVisibility(INVISIBLE);
+                    view.getRootView().findViewById(R.id.button_to_work).setEnabled(true);
+                }
+            });
+        }
+        Button assignProblemButton = view.findViewById(R.id.button_to_assign_problem);
+        if (assignProblemButton != null) {
+            assignProblemButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LinearLayout layout = (LinearLayout)view.getParent();
+                    BoardItem parent_layout = (BoardItem)layout.getParent().getParent();
+                    int pos = mParentLayout.indexOfChild(parent_layout);
+                    int i = layout.indexOfChild(view);
+                    //main activity
+                    CardsActivity.PROBLEM_POS = pos;
+                    CardsActivity.PROBLEM_I = i;
+                    Log.e("problem", "choose " + pos + " " + i);
+                    //делаем все задачи активными
+                    boardAdapter.columns.get(ColumnName.PROBLEM.columnNumber).views.forEach(item -> {
+                        Button assignButton = item.findViewById(R.id.button_to_assign_problem);
+                        assignButton.setVisibility(VISIBLE);
+                    });
+                    boardAdapter.columns.get(pos).views.get(i).findViewById(R.id.button_to_assign_problem).setVisibility(INVISIBLE);
+                    //Если выбрана пробелма и решение, то кнопка "решить" активана, иначе нет
+                    view.getRootView().findViewById(R.id.button_to_solve).setEnabled(CardsActivity.isSolveButtonActive());
+                }
+            });
+        }
+        Button assignSolutionButton = view.findViewById(R.id.button_to_assign_solution);
+        if (assignSolutionButton != null) {
+            assignSolutionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LinearLayout layout = (LinearLayout)view.getParent();
+                    BoardItem parent_layout = (BoardItem)layout.getParent().getParent();
+                    int pos = mParentLayout.indexOfChild(parent_layout);
+                    int i = layout.indexOfChild(view);
+                    //main activity
+                    CardsActivity.SOLUTION_POS = pos;
+                    CardsActivity.SOLUTION_I = i;
+                    Log.e("problem", "choose " + pos + " " + i);
+                    //делаем все задачи активными
+                    boardAdapter.columns.get(ColumnName.SOLUTION.columnNumber).views.forEach(item -> {
+                        Button assignButton = item.findViewById(R.id.button_to_assign_solution);
+                        assignButton.setVisibility(VISIBLE);
+                    });
+                    boardAdapter.columns.get(pos).views.get(i).findViewById(R.id.button_to_assign_solution).setVisibility(INVISIBLE);
+                    //Если выбрана пробелма и решение, то кнопка "решить" активана, иначе нет
+                    view.getRootView().findViewById(R.id.button_to_solve).setEnabled(CardsActivity.isSolveButtonActive());
+                }
+            });
+        }
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

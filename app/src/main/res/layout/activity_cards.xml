@@ -11,11 +11,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="200dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="50dp"
         android:text="@string/button_main"
         android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/button_to_solve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="250dp"
+        android:text="@string/button_solve"
+        android:textSize="12sp"
+        android:enabled="false"/>
 
     <com.project.kn.scrumsimulator.boardview.BoardView
         android:id="@+id/boardView"

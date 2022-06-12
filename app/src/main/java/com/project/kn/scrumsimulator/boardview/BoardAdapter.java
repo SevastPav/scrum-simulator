@@ -48,7 +48,7 @@ public abstract class BoardAdapter{
         boardViewTransition = t;
     }
 
-    public static class Column{
+    public static class Column {
         public View header;
         public Object header_object;
         public Object footer_object;

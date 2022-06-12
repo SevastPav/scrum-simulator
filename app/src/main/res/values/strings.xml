@@ -9,7 +9,10 @@
     <string name="button_get_register">Зарегистрироваться</string>
     <string name="button_save">Сохранить</string>
     <string name="button_assign">Взять</string>
+    <string name="button_assign_problem">Выбрать</string>
+    <string name="button_assign_solution">Выбрать</string>
     <string name="button_work">Работа</string>
+    <string name="button_solve">Решить</string>
     <string name="button_main">Завершить обсуждение</string>
     <string name="title_activity_register">RegisterActivity</string>
 </resources>

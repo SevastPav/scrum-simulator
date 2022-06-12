@@ -32,13 +32,13 @@
             app:srcCompat="@drawable/ic_solution" />
 
         <Button
-            android:id="@+id/button_to_assign"
+            android:id="@+id/button_to_assign_solution"
             android:layout_width="62dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="12dp"
             android:shadowColor="#BBBBBB"
-            android:text="@string/button_assign"
+            android:text="@string/button_assign_solution"
             android:textSize="8sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"

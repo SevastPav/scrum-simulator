@@ -2,6 +2,7 @@ package com.project.kn.scrumsimulator.boardview;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.project.kn.scrumsimulator.R;
@@ -98,6 +99,8 @@ public class SimpleBoardAdapter extends BoardAdapter{
             Problem problem = (Problem) card;
             TextView nameView = (TextView) problemView.findViewById(R.id.card_content);
             nameView.setText(problem.getName());
+            Button assignButton = (Button) problemView.findViewById(R.id.button_to_assign_problem);
+            assignButton.setVisibility(View.VISIBLE);
             return problemView;
         }
         if (card instanceof Solution) {
@@ -105,6 +108,8 @@ public class SimpleBoardAdapter extends BoardAdapter{
             Solution solution = (Solution) card;
             TextView nameView = (TextView) solutionView.findViewById(R.id.card_content);
             nameView.setText(solution.getName());
+            Button assignButton = (Button) solutionView.findViewById(R.id.button_to_assign_solution);
+            assignButton.setVisibility(View.VISIBLE);
             return solutionView;
         }
         if (card instanceof Event) {
