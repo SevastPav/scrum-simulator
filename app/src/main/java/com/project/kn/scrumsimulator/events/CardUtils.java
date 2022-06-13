@@ -24,9 +24,7 @@ public class CardUtils {
 
     public static Card generateCard(View v, int taskId) {
 
-        ArrayList<Card> cards = MainActivity.getCards();
-        int i = RandomUtils.getRandomIntBetween(0, cards.size() - 1);
-        Card card = cards.get(i);
+        Card card = MainActivity.getCards().stream().findAny().get();
         if (card instanceof Problem) {
             card = new Problem(card.getName(), card.getDescription(), ((Problem) card).getGroup());
             ((Problem) card).setTaskId(taskId);
