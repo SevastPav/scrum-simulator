@@ -130,9 +130,9 @@ public class CardsActivity extends AppCompatActivity {
 
     private static void openSiteDialogWithMsg(View v, boolean isSolutionCorrect) {
 
-        String msg = "Вы выбрали верное решение для проблемы!";
+        String msg = "Поздравляем, проблема решена!";
         if (!isSolutionCorrect) {
-            msg = "Вы выбрали неверное решение для проблемы";
+            msg = "Данное решение не подходит для этой проблемы. Попробуйте еще посоветоваться и найти другое решение";
         }
         final AlertDialog aboutDialog = new AlertDialog.Builder(v.getContext())
                 .setMessage(msg)

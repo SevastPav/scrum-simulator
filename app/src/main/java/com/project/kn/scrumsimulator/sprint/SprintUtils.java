@@ -75,11 +75,11 @@ public class SprintUtils {
         Log.e("day", "day is end");
         incSprintDay();
         if (isSprintEnd()){
-            String msg = "Спринт закончен. Общее количество продуктивных часов = " + COUNT_OF_HOURS_IN_SPRINT;
+            String msg = "Спринт подошел к концу. Общее количество продуктивных часов = " + COUNT_OF_HOURS_IN_SPRINT + ". Запланируйте задачи на следующий спринт!";
             Log.e("sprint", msg);
             incSprintNumber();
             if (isSprintsEnd()){
-                msg = "Поздравляем, все спринты завершены! Общее количество продуктивных часов = " + COUNT_OF_HOURS_IN_ALL_SPRINTS + "; Количество решенных задач = " + COUNT_OF_FINISHED_TASKS;
+                msg = "Поздравляем, все спринты завершены. За симуляцию Вам удалось решить " + COUNT_OF_FINISHED_TASKS + " задач. Общее количество продуктивных часов = " + COUNT_OF_HOURS_IN_ALL_SPRINTS;
                 Log.e("sprint", msg);
                 openSiteDialogWithMsg(v, msg, true);
             } else {

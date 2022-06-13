@@ -23,13 +23,15 @@
         android:id="@+id/start_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="64dp"
+        android:backgroundTint="#57BEE6"
         android:text="Начать игру"
         android:textSize="12sp"
-        android:backgroundTint="#57BEE6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_project"
         app:layout_constraintVertical_bias="0.795" />
 
     <TextView
@@ -50,17 +52,33 @@
     <TextView
         android:id="@+id/about"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="250dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:text="@string/game_how_to_play"
-        android:textAlignment="textStart"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <TextView
+        android:id="@+id/about_project"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/project_description"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/start_game"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header" />
+        app:layout_constraintTop_toBottomOf="@+id/about" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
