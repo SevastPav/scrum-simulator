@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (item.hoursCount == 0) {
                     workButton.setEnabled(false);
+                    SprintUtils.incCountOfFinishedTasks();
                 }
 
                 //Выводим информацию о событии и добавляем в спринт
@@ -150,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 currentPlayer.isWorkToday = true;
+                SprintUtils.incCountOfHoursInDay(randomHours);
                 if (isAllPlayersWorked()) {
-                    SprintUtils.incCountOfHoursInDay(randomHours);
                     SprintUtils.allPlayersWorked(v);
                 }
                 currentPlayer = getRandomUnworkedPlayer();

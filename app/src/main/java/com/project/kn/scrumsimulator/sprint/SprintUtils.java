@@ -30,10 +30,15 @@ public class SprintUtils {
     public static int COUNT_OF_SPRINTS = 3;
     public static int COUNT_OF_HOURS_IN_SPRINT = 0;
     public static int COUNT_OF_HOURS_IN_ALL_SPRINTS = 0;
+    public static int COUNT_OF_FINISHED_TASKS = 0;
 
     public static ProgressBar progressBarDay, progressBarSprint;
 
     private static ArrayList<Card> cards = new ArrayList<>();
+
+    public static void incCountOfFinishedTasks() {
+        COUNT_OF_FINISHED_TASKS += 1;
+    }
 
     public static void addCard(Card card) {
 
@@ -74,7 +79,7 @@ public class SprintUtils {
             Log.e("sprint", msg);
             incSprintNumber();
             if (isSprintsEnd()){
-                msg = "Поздравляем, все спринты завершены! Общее количество продуктивных часов = " + COUNT_OF_HOURS_IN_ALL_SPRINTS;
+                msg = "Поздравляем, все спринты завершены! Общее количество продуктивных часов = " + COUNT_OF_HOURS_IN_ALL_SPRINTS + "; Количество решенных задач = " + COUNT_OF_FINISHED_TASKS;
                 Log.e("sprint", msg);
                 openSiteDialogWithMsg(v, msg, true);
             } else {
