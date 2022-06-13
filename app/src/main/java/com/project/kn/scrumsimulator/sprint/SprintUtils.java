@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class SprintUtils {
 
     public static int NUMBER_OF_SPRINT_DAY = 1;
-    public static int COUNT_OF_SPRINT_DAYS = 7;
+    public static int COUNT_OF_SPRINT_DAYS = 14;
     public static int NUMBER_OF_SPRINT = 1;
     public static int COUNT_OF_SPRINTS = 3;
     public static int COUNT_OF_HOURS_IN_SPRINT = 0;
