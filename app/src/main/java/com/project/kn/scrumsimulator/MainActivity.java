@@ -30,6 +30,7 @@ import com.project.kn.scrumsimulator.sprint.SprintUtils;
 import com.project.kn.scrumsimulator.utils.RandomUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e){
             e.printStackTrace();
         }
+        Collections.shuffle(cards);
     }
 
     private void initColumns(ArrayList<SimpleBoardAdapter.SimpleColumn> data) {

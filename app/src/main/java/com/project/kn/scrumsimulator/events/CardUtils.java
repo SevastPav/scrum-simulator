@@ -22,11 +22,19 @@ import java.util.stream.Collectors;
 
 public class CardUtils {
 
+    private static int index = 0;
+
     public static Card generateCard(View v, int taskId) {
 
+        Card card;
         ArrayList<Card> cards = MainActivity.getCards();
-        int i = RandomUtils.getRandomIntBetween(0, cards.size() - 1);
-        Card card = cards.get(i);
+        if (index < cards.size()) {
+            card = cards.get(index);
+            index++;
+        } else {
+            index = 0;
+            card = cards.get(index);
+        }
         if (card instanceof Problem) {
             card = new Problem(card.getName(), card.getDescription(), ((Problem) card).getGroup());
             ((Problem) card).setTaskId(taskId);
