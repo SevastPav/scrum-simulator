@@ -24,7 +24,7 @@ public class ProblemRepository implements Repository<ProblemEntity> {
         ArrayList<ProblemEntity> problemEntities = new ArrayList<>();
         String sql = "SELECT * FROM problem where project_id = " + projectId;
 
-        try (Statement statement = connection.createStatement();
+        try (Statement statement = DatabaseConfig.getConnection().createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {

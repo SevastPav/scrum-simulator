@@ -16,7 +16,7 @@ public class TaskRepository implements Repository<TaskEntity> {
     private Connection connection;
 
     public TaskRepository(DatabaseConfig dbConfig) {
-        this.connection = dbConfig.getExtraConnection();
+//        this.connection = dbConfig.getExtraConnection();
     }
 
     public List<TaskEntity> findAllByProjectId(int projectId) {
@@ -24,7 +24,7 @@ public class TaskRepository implements Repository<TaskEntity> {
         ArrayList<TaskEntity> taskEntities = new ArrayList<>();
         String sql = "SELECT * FROM task where project_id = " + projectId;
 
-        try (Statement statement = connection.createStatement();
+        try (Statement statement = DatabaseConfig.getConnection().createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {

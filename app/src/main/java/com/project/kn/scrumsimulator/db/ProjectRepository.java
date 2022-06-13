@@ -29,7 +29,7 @@ public class ProjectRepository implements Repository<ProjectEntity> {
         ArrayList<ProjectEntity> projectEntities = new ArrayList<>();
         String sql = "SELECT * FROM project";
 
-        try (Statement statement = connection.createStatement();
+        try (Statement statement = DatabaseConfig.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {

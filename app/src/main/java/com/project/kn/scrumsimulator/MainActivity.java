@@ -19,6 +19,7 @@ import com.project.kn.scrumsimulator.db.ProblemRepository;
 import com.project.kn.scrumsimulator.db.SolutionRepository;
 import com.project.kn.scrumsimulator.db.TaskRepository;
 import com.project.kn.scrumsimulator.entity.PlayerEntity;
+import com.project.kn.scrumsimulator.entity.TaskEntity;
 import com.project.kn.scrumsimulator.events.Card;
 import com.project.kn.scrumsimulator.events.CardUtils;
 import com.project.kn.scrumsimulator.events.Event;
@@ -29,6 +30,9 @@ import com.project.kn.scrumsimulator.sprint.SprintUtils;
 import com.project.kn.scrumsimulator.utils.RandomUtils;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,11 +67,14 @@ public class MainActivity extends AppCompatActivity {
 
         backloglist = new ArrayList<>();
         cards = new ArrayList<>();
-
-        taskRepository.findAllByProjectId(projectId).forEach(t -> backloglist.add(Task.fromEntity(t)));
-        solutionRepository.findAllByProjectId(projectId).forEach(s -> cards.add(Solution.fromEntity(s)));
-        problemRepository.findAllByProjectId(projectId).forEach(p -> cards.add(Problem.fromEntity(p)));
-        eventRepository.findAllByProjectId(projectId).forEach(e -> cards.add(Event.fromEntity(e)));
+        try {
+            CompletableFuture.supplyAsync(() -> taskRepository.findAllByProjectId(projectId)).get().forEach(t -> backloglist.add(Task.fromEntity(t)));
+            CompletableFuture.supplyAsync(() -> solutionRepository.findAllByProjectId(projectId)).get().forEach(s -> cards.add(Solution.fromEntity(s)));
+            CompletableFuture.supplyAsync(() -> problemRepository.findAllByProjectId(projectId)).get().forEach(p -> cards.add(Problem.fromEntity(p)));
+            CompletableFuture.supplyAsync(() -> eventRepository.findAllByProjectId(projectId)).get().forEach(e -> cards.add(Event.fromEntity(e)));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void initColumns(ArrayList<SimpleBoardAdapter.SimpleColumn> data) {

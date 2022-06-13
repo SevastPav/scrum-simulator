@@ -40,7 +40,6 @@ public class MainActivityOld extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), StartPage.class);
-                intent.putExtra("projectId", 1);
                 startActivity(intent);
             }
         });

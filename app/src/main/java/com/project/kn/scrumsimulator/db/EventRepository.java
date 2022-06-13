@@ -16,7 +16,7 @@ public class EventRepository implements Repository<EventEntity> {
     private Connection connection;
 
     public EventRepository(DatabaseConfig dbConfig) {
-        this.connection = dbConfig.getExtraConnection();
+//        this.connection = dbConfig.getExtraConnection();
     }
 
     public List<EventEntity> findAllByProjectId(int projectId) {
@@ -24,7 +24,7 @@ public class EventRepository implements Repository<EventEntity> {
         ArrayList<EventEntity> problems = new ArrayList<>();
         String sql = "SELECT * FROM event where project_id = " + projectId;
 
-        try (Statement statement = connection.createStatement();
+        try (Statement statement = DatabaseConfig.getConnection().createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {

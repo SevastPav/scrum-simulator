@@ -26,7 +26,7 @@ public class PlayerRepository implements Repository<PlayerEntity> {
 
         String sql = "SELECT * FROM player where login = " + playerLogin + " and password = " + playerPassword;
 
-        try (Statement statement = connection.createStatement();
+        try (Statement statement = DatabaseConfig.getConnection().createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 
             if (resultSet.next()) {
