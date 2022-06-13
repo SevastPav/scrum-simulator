@@ -1,5 +1,7 @@
 package com.project.kn.scrumsimulator.events;
 
+import com.project.kn.scrumsimulator.entity.ProblemEntity;
+
 import java.util.UUID;
 
 public class Problem extends Card {
@@ -30,5 +32,10 @@ public class Problem extends Card {
 
     public String getId() {
         return id;
+    }
+
+    public static Problem fromEntity(ProblemEntity entity) {
+
+        return new Problem(entity.getName(), entity.getDescription(), entity.getGroupNumber());
     }
 }

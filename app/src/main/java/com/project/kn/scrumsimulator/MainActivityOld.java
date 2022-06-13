@@ -1,19 +1,42 @@
 package com.project.kn.scrumsimulator;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.project.kn.scrumsimulator.boardview.Task;
 import com.project.kn.scrumsimulator.config.DatabaseConfig;
+import com.project.kn.scrumsimulator.db.EventRepository;
+import com.project.kn.scrumsimulator.db.PlayerRepository;
+import com.project.kn.scrumsimulator.db.ProblemRepository;
+import com.project.kn.scrumsimulator.db.SolutionRepository;
+import com.project.kn.scrumsimulator.db.TaskRepository;
+import com.project.kn.scrumsimulator.events.Event;
+import com.project.kn.scrumsimulator.events.Problem;
+import com.project.kn.scrumsimulator.events.Solution;
+import com.project.kn.scrumsimulator.sprint.SprintUtils;
+
+import java.util.concurrent.CompletableFuture;
 
 public class MainActivityOld extends AppCompatActivity {
 
     public static EditText loginField, passwordField;
     public static Button loginButton, registerButton;
+
+    private final PlayerRepository playerRepository;
+
+    public MainActivityOld() {
+        DatabaseConfig dbConfig = new DatabaseConfig();
+        playerRepository = new PlayerRepository(dbConfig);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +61,34 @@ public class MainActivityOld extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), StartPage.class);
-                startActivity(intent);
+                try {
+                    boolean isSuccess = CompletableFuture.supplyAsync(() -> playerRepository.verifyLoginAndPassword(loginField.getText().toString(), passwordField.getText().toString())).get();
+
+                    if (isSuccess) {
+                        Intent intent = new Intent(v.getContext(), StartPage.class);
+                        startActivity(intent);
+                    } else {
+                        openSiteDialogWithErrorMsg(v);
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
+    }
+
+    private static void openSiteDialogWithErrorMsg(View v) {
+
+        String msg = "Ошибка в заполнении данных";
+        final AlertDialog aboutDialog = new AlertDialog.Builder(v.getContext())
+                .setMessage(msg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).create();
+
+        aboutDialog.show();
     }
 }

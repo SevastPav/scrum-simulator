@@ -1,5 +1,6 @@
 package com.project.kn.scrumsimulator.boardview;
 
+import com.project.kn.scrumsimulator.entity.TaskEntity;
 import com.project.kn.scrumsimulator.events.Card;
 import com.project.kn.scrumsimulator.events.CardType;
 import com.project.kn.scrumsimulator.events.Problem;
@@ -52,5 +53,10 @@ public class Task extends Card {
 
     public void removeProblem(Problem problemCard) {
         problems.removeIf(p -> p.getId().equals(problemCard.getId()));
+    }
+
+    public static Task fromEntity(TaskEntity entity) {
+
+        return new Task(entity.getName(), entity.getDescription(), entity.getPriority(), entity.getHours(), entity.getId());
     }
 }

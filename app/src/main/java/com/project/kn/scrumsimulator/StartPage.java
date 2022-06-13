@@ -22,6 +22,7 @@ public class StartPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
+                intent.putExtra("projectId", 1);
                 startActivity(intent);
             }
         });
