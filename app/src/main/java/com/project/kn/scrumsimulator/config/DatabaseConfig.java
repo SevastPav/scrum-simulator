@@ -8,7 +8,7 @@ public class DatabaseConfig {
     private Connection connection;
 
     // For Local PostgreSQL
-    private final String host = "192.168.0.224";
+    private final String host = "192.168.31.179";
 
     private final String database = "scrum";
     private final int port = 5432;

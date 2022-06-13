@@ -2,6 +2,7 @@ package com.project.kn.scrumsimulator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,12 @@ import android.widget.TextView;
 import com.project.kn.scrumsimulator.boardview.BoardView;
 import com.project.kn.scrumsimulator.boardview.Task;
 import com.project.kn.scrumsimulator.boardview.SimpleBoardAdapter;
+import com.project.kn.scrumsimulator.config.DatabaseConfig;
+import com.project.kn.scrumsimulator.db.EventRepository;
+import com.project.kn.scrumsimulator.db.ProblemRepository;
+import com.project.kn.scrumsimulator.db.SolutionRepository;
+import com.project.kn.scrumsimulator.db.TaskRepository;
+import com.project.kn.scrumsimulator.entity.PlayerEntity;
 import com.project.kn.scrumsimulator.events.Card;
 import com.project.kn.scrumsimulator.events.CardUtils;
 import com.project.kn.scrumsimulator.events.Event;
@@ -25,34 +32,60 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static PlayerEntity loginedPlayer;
+    private static Player currentPlayer;
+    private static ArrayList<Player> players;
+
+    private static ArrayList<Card> backloglist;
     private static ArrayList<Card> cards;
 
-    static {
-        cards = new ArrayList<>();
-        cards.add(new Solution("solution 1", "solution description", 1));
-        cards.add(new Solution("solution 2", "solution description", 2));
-        cards.add(new Problem("problem 1", "problem description", 1));
-        cards.add(new Problem("problem 2", "problem description", 2));
-        cards.add(new Event("event 2", "event description", true));
-        cards.add(new Event("event 2", "event description", false));
-    }
-
-    ArrayList<Card> list = new ArrayList<>();
-    private static Player currentPlayer;
-    private static ArrayList<Player> players = new ArrayList<>();
-    public static int NUMBER_OF_SPRINT_DAY = 0;
-    public static int COUNT_OF_SPRINT_DAYS = 3;
-    public static int NUMBER_OF_SPRINT = 0;
-    public static int COUNT_OF_SPRINTS = 3;
-
-    public static int ITEM_POS;
-    public static int ITEM_I;
+    public static int TASK_POS;
+    public static int TASK_I;
 
     public static Button workButton;
     public static BoardView boardView;
     private static TextView currentPlayerView;
 
-    Context context = this;
+    private final TaskRepository taskRepository;
+    private final ProblemRepository problemRepository;
+    private final SolutionRepository solutionRepository;
+    private final EventRepository eventRepository;
+
+    public MainActivity() {
+        DatabaseConfig dbConfig = new DatabaseConfig();
+        taskRepository = new TaskRepository(dbConfig);
+        problemRepository = new ProblemRepository(dbConfig);
+        solutionRepository = new SolutionRepository(dbConfig);
+        eventRepository = new EventRepository(dbConfig);
+    }
+
+    private void initCards(int projectId) {
+
+        backloglist = new ArrayList<>();
+        cards = new ArrayList<>();
+
+        taskRepository.findAllByProjectId(projectId).forEach(t -> backloglist.add(Task.fromEntity(t)));
+        solutionRepository.findAllByProjectId(projectId).forEach(s -> cards.add(Solution.fromEntity(s)));
+        problemRepository.findAllByProjectId(projectId).forEach(p -> cards.add(Problem.fromEntity(p)));
+        eventRepository.findAllByProjectId(projectId).forEach(e -> cards.add(Event.fromEntity(e)));
+    }
+
+    private void initColumns(ArrayList<SimpleBoardAdapter.SimpleColumn> data) {
+
+        final ArrayList<Task> empty = new ArrayList<>();
+        data.add(new SimpleBoardAdapter.SimpleColumn("Backlog",(ArrayList) backloglist));
+        data.add(new SimpleBoardAdapter.SimpleColumn("TODO",(ArrayList)empty));
+        data.add(new SimpleBoardAdapter.SimpleColumn("In progress",(ArrayList)empty));
+        data.add(new SimpleBoardAdapter.SimpleColumn("Done",(ArrayList)empty));
+    }
+
+    private void initPlayers() {
+
+        players = new ArrayList<>();
+        players.add(new Player("Andrew"));
+        players.add(new Player("Pavel"));
+        players.add(new Player("Alex"));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,29 +97,13 @@ public class MainActivity extends AppCompatActivity {
         boardView = (BoardView)findViewById(R.id.boardView);
         boardView.SetColumnSnap(false);
         boardView.SetColumnSnap(true);
+
         final ArrayList<SimpleBoardAdapter.SimpleColumn> data = new ArrayList<>();
-        list.add(new Task("Пользователи могут безопасно обмениваться e-mail со списком заранее определенных получателей", "Description 1", 1, 24, 1));
-        list.add(new Task("Пользователи могут безопасно пересылать большие файлы", "Description 1", 2, 21, 2));
-        list.add(new Task("Пользователи могут установить ограничение по времени для чтения писем", "Description 1", 3, 27, 3));
-        list.add(new Task("Пользователи могут отправлять письма любым получателям", "Description 1", 4, 30, 3));
-        list.add(new Task("Администратор компании может отслеживать письма", "Description 1", 5, 16, 4));
-        list.add(new Task("Каждая организация может устанавливать политику безопасности и определить группы получателей", "Description 1", 6, 24, 5));
-        list.add(new Task("Пользователи могут эффективно управлять своими письмами", "Description 1", 7, 43, 6));
-        list.add(new Task("Пользователи и администратормы могут безопасно делать резервные копии", "Description 1", 8, 23, 7));
-        list.add(new Task("Пользователи и администраторы могут полностью удалять письма", "Description 1", 9, 36, 8));
-        list.add(new Task("Ползователи могут работать со своей почтой с мобильных телефонов", "Description 1", 10, 68, 9));
-        list.add(new Task("Пользователи могут безопасно обмениваться короткими сообщениями с любыми получателями", "Description 1", 11, 28, 10));
-        list.add(new Task("Пользователи не хотят получать спам-письма", "Description 1", 12, 24, 11));
-
-        final ArrayList<Task> empty = new ArrayList<>();
-        data.add(new SimpleBoardAdapter.SimpleColumn("Backlog",(ArrayList)list));
-        data.add(new SimpleBoardAdapter.SimpleColumn("TODO",(ArrayList)empty));
-        data.add(new SimpleBoardAdapter.SimpleColumn("In progress",(ArrayList)empty));
-        data.add(new SimpleBoardAdapter.SimpleColumn("Done",(ArrayList)empty));
-
-        players.add(new Player("Andrew"));
-        players.add(new Player("Pavel"));
-        players.add(new Player("Alex"));
+        Bundle arguments = getIntent().getExtras();
+        int projectId = (int) arguments.get("projectId");
+        initCards(projectId);
+        initColumns(data);
+        initPlayers();
 
         currentPlayer = players.get(0);
         currentPlayerView.setText(currentPlayer.name);
@@ -104,13 +121,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 SprintUtils.updateProgressBars();
-                Task item = (Task) boardAdapter.columns.get(ITEM_POS).objects.get(ITEM_I);
+                Task item = (Task) boardAdapter.columns.get(TASK_POS).objects.get(TASK_I);
                 int randomHours = RandomUtils.getRandomIntBetween(1, 8);
                 int newHours = item.hoursCount - randomHours;
                 item.hoursCount = Math.max(newHours, 0);
-                String msg = String.format("Списано %d часов с карточки %d : %d", randomHours, ITEM_POS, ITEM_I);
+                @SuppressLint("DefaultLocale")
+                String msg = String.format("Списано %d часов с карточки %d : %d", randomHours, TASK_POS, TASK_I);
                 Log.e("work",msg);
-                TextView taskHours = boardAdapter.columns.get(ITEM_POS).views.get(ITEM_I).findViewById(R.id.task_hours);
+                TextView taskHours = boardAdapter.columns.get(TASK_POS).views.get(TASK_I).findViewById(R.id.task_hours);
                 taskHours.setText(String.valueOf(item.hoursCount));
 
                 if (item.hoursCount == 0) {
@@ -121,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 Card card = CardUtils.generateCard(v, item.id);
                 if (card instanceof Problem) {
                     item.addProblem((Problem) card);
-                    boardAdapter.columns.get(ITEM_POS).views.get(ITEM_I).findViewById(R.id.cardImageProblem).setVisibility(View.VISIBLE);
+                    boardAdapter.columns.get(TASK_POS).views.get(TASK_I).findViewById(R.id.cardImageProblem).setVisibility(View.VISIBLE);
                 }
 
                 currentPlayer.isWorkToday = true;
@@ -157,10 +175,5 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isAllPlayersWorked() {
 
         return players.stream().allMatch(p -> p.isWorkToday);
-    }
-
-    private boolean isSprintEnd() {
-
-        return NUMBER_OF_SPRINT_DAY >= COUNT_OF_SPRINT_DAYS;
     }
 }

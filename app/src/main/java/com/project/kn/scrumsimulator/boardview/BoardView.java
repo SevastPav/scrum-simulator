@@ -972,8 +972,8 @@ public class BoardView extends FrameLayout {
                     int pos = mParentLayout.indexOfChild(parent_layout);
                     int i = layout.indexOfChild(view);
                     //main activity
-                    MainActivity.ITEM_POS = pos;
-                    MainActivity.ITEM_I = i;
+                    MainActivity.TASK_POS = pos;
+                    MainActivity.TASK_I = i;
                     Log.e("item", "choose " + pos + " " + i);
                     //делаем все задачи активными
                     for(int j=0; j<boardAdapter.columns.get(ColumnName.IN_PROGRESS.columnNumber).views.size(); j++) {
