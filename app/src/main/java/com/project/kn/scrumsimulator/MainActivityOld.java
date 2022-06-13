@@ -12,17 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.project.kn.scrumsimulator.boardview.Task;
 import com.project.kn.scrumsimulator.config.DatabaseConfig;
-import com.project.kn.scrumsimulator.db.EventRepository;
 import com.project.kn.scrumsimulator.db.PlayerRepository;
-import com.project.kn.scrumsimulator.db.ProblemRepository;
-import com.project.kn.scrumsimulator.db.SolutionRepository;
-import com.project.kn.scrumsimulator.db.TaskRepository;
-import com.project.kn.scrumsimulator.events.Event;
-import com.project.kn.scrumsimulator.events.Problem;
-import com.project.kn.scrumsimulator.events.Solution;
-import com.project.kn.scrumsimulator.sprint.SprintUtils;
 
 import java.util.concurrent.CompletableFuture;
 

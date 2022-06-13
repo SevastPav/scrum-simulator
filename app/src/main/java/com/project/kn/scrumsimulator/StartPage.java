@@ -7,9 +7,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.project.kn.scrumsimulator.config.DatabaseConfig;
+import com.project.kn.scrumsimulator.db.PlayerRepository;
+import com.project.kn.scrumsimulator.db.ProjectRepository;
+import com.project.kn.scrumsimulator.entity.ProjectEntity;
+
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 public class StartPage extends AppCompatActivity {
 
     public static Button startButton;
+
+    private final ProjectRepository projectRepository;
+
+    public StartPage() {
+        DatabaseConfig dbConfig = new DatabaseConfig();
+        projectRepository = new ProjectRepository(dbConfig);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +37,18 @@ public class StartPage extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                intent.putExtra("projectId", 1);
-                startActivity(intent);
+                try {
+                    Optional<ProjectEntity> projectOpt = CompletableFuture.supplyAsync(projectRepository::findAll).get().stream().findAny();
+                    ProjectEntity project = projectOpt.get();
+                    //TODO вывести название и описание проекта на экран
+                    String name = project.getName();
+                    String description = project.getDescription();
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    intent.putExtra("projectId", project.getId());
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
