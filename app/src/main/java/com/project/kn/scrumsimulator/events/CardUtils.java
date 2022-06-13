@@ -24,7 +24,9 @@ public class CardUtils {
 
     public static Card generateCard(View v, int taskId) {
 
-        Card card = MainActivity.getCards().stream().findAny().get();
+        ArrayList<Card> cards = MainActivity.getCards();
+        int i = RandomUtils.getRandomIntBetween(0, cards.size() - 1);
+        Card card = cards.get(i);
         if (card instanceof Problem) {
             card = new Problem(card.getName(), card.getDescription(), ((Problem) card).getGroup());
             ((Problem) card).setTaskId(taskId);
@@ -41,17 +43,24 @@ public class CardUtils {
         dlg.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         int resourceId = 0;
+        View cardView = null;
         if (card instanceof Problem) {
             resourceId = R.layout.problem_card;
+            cardView = View.inflate(v.getContext(), resourceId, null);
+            TextView groupId = (TextView) cardView.findViewById(R.id.problem_group_id);
+            groupId.setText(String.valueOf(((Problem) card).getGroup()));
         }
         if (card instanceof Solution) {
             resourceId = R.layout.solution_card;
+            cardView = View.inflate(v.getContext(), resourceId, null);
+            TextView groupId = (TextView) cardView.findViewById(R.id.solution_group_id);
+            groupId.setText(String.valueOf(((Solution) card).getGroup()));
         }
         if (card instanceof Event) {
             resourceId = (((Event) card).isPositive()) ? R.layout.event_good_card : R.layout.event_bad_card;
+            cardView = View.inflate(v.getContext(), resourceId, null);
         }
 
-        View cardView = View.inflate(v.getContext(), resourceId, null);
         TextView nameView = (TextView) cardView.findViewById(R.id.card_content);
         nameView.setText(card.getName());
 

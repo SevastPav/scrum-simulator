@@ -16,7 +16,7 @@ public class ProblemRepository implements Repository<ProblemEntity> {
     private Connection connection;
 
     public ProblemRepository(DatabaseConfig dbConfig) {
-        this.connection = dbConfig.getExtraConnection();
+//        this.connection = dbConfig.getExtraConnection();
     }
 
     public List<ProblemEntity> findAllByProjectId(int projectId) {

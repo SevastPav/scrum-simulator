@@ -16,7 +16,7 @@ public class SolutionRepository implements Repository<SolutionEntity> {
     private Connection connection;
 
     public SolutionRepository(DatabaseConfig dbConfig) {
-        this.connection = dbConfig.getExtraConnection();
+//        this.connection = dbConfig.getExtraConnection();
     }
 
     public List<SolutionEntity> findAllByProjectId(int projectId) {

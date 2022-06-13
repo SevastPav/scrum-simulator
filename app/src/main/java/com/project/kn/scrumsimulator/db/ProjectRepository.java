@@ -16,7 +16,7 @@ public class ProjectRepository implements Repository<ProjectEntity> {
     private Connection connection;
 
     public ProjectRepository(DatabaseConfig dbConfig) {
-        this.connection = dbConfig.getExtraConnection();
+//        this.connection = dbConfig.getExtraConnection();
     }
 
     @Override

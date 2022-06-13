@@ -101,6 +101,8 @@ public class SimpleBoardAdapter extends BoardAdapter{
             nameView.setText(problem.getName());
             Button assignButton = (Button) problemView.findViewById(R.id.button_to_assign_problem);
             assignButton.setVisibility(View.VISIBLE);
+            TextView groupId = (TextView) problemView.findViewById(R.id.problem_group_id);
+            groupId.setText(String.valueOf(((Problem) card).getGroup()));
             return problemView;
         }
         if (card instanceof Solution) {
@@ -110,6 +112,8 @@ public class SimpleBoardAdapter extends BoardAdapter{
             nameView.setText(solution.getName());
             Button assignButton = (Button) solutionView.findViewById(R.id.button_to_assign_solution);
             assignButton.setVisibility(View.VISIBLE);
+            TextView groupId = (TextView) solutionView.findViewById(R.id.solution_group_id);
+            groupId.setText(String.valueOf(((Solution) card).getGroup()));
             return solutionView;
         }
         if (card instanceof Event) {

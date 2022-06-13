@@ -15,6 +15,7 @@ import com.project.kn.scrumsimulator.entity.ProjectEntity;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class StartPage extends AppCompatActivity {
 
@@ -38,7 +39,7 @@ public class StartPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Optional<ProjectEntity> projectOpt = CompletableFuture.supplyAsync(projectRepository::findAll).get().stream().findAny();
+                    Optional<ProjectEntity> projectOpt = CompletableFuture.supplyAsync(projectRepository::findAll).get().stream().sorted((o1, o2) -> ThreadLocalRandom.current().nextInt(-1, 2)).findAny();
                     ProjectEntity project = projectOpt.get();
                     //TODO вывести название и описание проекта на экран
                     String name = project.getName();
